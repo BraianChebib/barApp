@@ -4,13 +4,13 @@ const {
   } = require("../controllers/publicControllers");
 
   const registerUserHandler = async (req, res) => {
-    var { email, id, name, lastname } = req.body;
+    var { email, id, name, lastname, phone, role } = req.body;
   
     try {
       if (!email ||!name || !lastname) {
         throw new Error("All fields are not complete");
       }
-      const newUser = await createUsers(email, id, name, lastname);
+      const newUser = await createUsers(email, id, name, lastname, phone, role);
       if (!newUser) {
 
         throw new Error("User not created");
