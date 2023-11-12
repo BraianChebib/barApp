@@ -7,18 +7,17 @@ module.exports = (sequelize) => {
     "Users",
     {
       id: {
-        type: DataTypes.STRING, //UUID es para que genere un número random con letras/números y único, habilitado en sql
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false, //no permito que esté vacío
+        type: DataTypes.STRING,
+        allowNull: false,
         primaryKey: true,
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
@@ -27,7 +26,7 @@ module.exports = (sequelize) => {
       },
       phone: {
         type: DataTypes.BIGINT,
-        allowNull: false,
+        // allowNull: false,
         unique: true
       },
       image: {
