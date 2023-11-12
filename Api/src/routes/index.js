@@ -12,6 +12,6 @@ const router = Router();
 router.use("/public",publicRouter);
 //Rutas privadas
 // router.use("/user",userRouter);
-// router.use("/admin",adminRouter);
+ router.use("/admin",adminRouter);
 
 module.exports = router;
