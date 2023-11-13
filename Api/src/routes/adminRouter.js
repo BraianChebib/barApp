@@ -6,10 +6,10 @@ const {
 
 const adminRouter = Router();
 
-/****** RUTAS PUBLICAS SIN AUTENTICARSE ******/
+/**************** RUTAS PUBLICAS SIN AUTENTICARSE ****************/
 
 //Registro de usuario
-adminRouter.post("/product/:userId", AdminHandler);
+adminRouter.post("/product/:UserId", AdminHandler);
 
 
 module.exports = adminRouter;

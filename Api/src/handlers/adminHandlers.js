@@ -1,7 +1,8 @@
-const { createProduct } = require("../controllers/adminControllers");
+const { getAllAdmins } = require("../controllers/adminControllers");
 
 const AdminHandler = async (req, res) => {
-    const { userId } = req.params;
+     const { UserId } = req.params;
+     console.log(UserId);
     const {
       id,
       name,
