@@ -1,12 +1,13 @@
 //Importar los controllers
 const {
     createUsers,
+    searchProductName,
     getAllProducts,
   } = require("../controllers/publicControllers");
 
   const registerUserHandler = async (req, res) => {
     var { email, id, name, lastname, phone, role } = req.body;
-  
+
     try {
       if (!email ||!name || !lastname) {
         throw new Error("All fields are not complete");
@@ -15,7 +16,7 @@ const {
       if (!newUser) {
 
         throw new Error("User not created");
-        
+
       }
       // Si todo sale bien se crea al nuevo usuario
       res.status(201).json(newUser);
@@ -24,6 +25,16 @@ const {
     }
   };
 
+
+  const getProduct =async (req, res)=>{
+    const nombreProducto = req.params.nombre;
+     console.log(nombreProducto);
+     const result = await searchProductName(nombreProducto);
+
+     res.status(200).send(result);
+  }
+
+
   const getAllProductsEnabledHandler= async (req, res) => {
   try {
       const products = await getAllProducts();
@@ -31,7 +42,7 @@ const {
       if (products.length === 0) {
         return res.status(404).json({ message: "There are not products" });
       }
-      
+
       res.status(200).json(products);
     // }
   } catch (error) {
@@ -41,5 +52,6 @@ const {
 
   module.exports = {
     registerUserHandler,
-    getAllProductsEnabledHandler
+    getAllProductsEnabledHandler,
+    getProduct
   };
