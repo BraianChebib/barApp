@@ -14,7 +14,6 @@ const createUsers = async (email, id, name, lastname, phone, role) => {
   return newUser;
 };
 
-
 const searchProductName = async (name) => {
   const databaseProduct = await Product.findOne({
     where: {
@@ -24,8 +23,20 @@ const searchProductName = async (name) => {
 
   return databaseProduct;
 };
+const getAllProducts = async () => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        enabled: true,
+      },
+    });
+    return products;
+  } catch (error) {
+    throw new Error("Error getting all products");
+  }
+};
 
 module.exports = {
   createUsers,
-  searchProductName,
+  getAllProducts,
 };
