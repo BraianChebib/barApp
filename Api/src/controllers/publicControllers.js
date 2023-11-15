@@ -1,4 +1,4 @@
-const {Users} = require("../db")
+const {Users, Product} = require("../db")
 
 const createUsers = async (email,id, name, lastname, phone, role) => {
     const [newUser, created] = await Users.findOrCreate({
@@ -13,9 +13,22 @@ const createUsers = async (email,id, name, lastname, phone, role) => {
 
     return newUser;
   };
+  const getAllProducts =async()=>{
+    try {
+      const products = await Product.findAll({
+        where:{
+          enabled: true,
+        },
+      })
+      return products;
+      
+    } catch (error) {
+      throw new Error("Error getting all products");
+    }
+  }
 
   module.exports = {
     createUsers,
-
+    getAllProducts,
   };
   
