@@ -1,6 +1,7 @@
 //Importar los controllers
 const {
     createUsers,
+    getAllProducts,
   } = require("../controllers/publicControllers");
 
   const registerUserHandler = async (req, res) => {
@@ -23,6 +24,22 @@ const {
     }
   };
 
+  const getAllProductsEnabledHandler= async (req, res) => {
+  try {
+      const products = await getAllProducts();
+
+      if (products.length === 0) {
+        return res.status(404).json({ message: "There are not products" });
+      }
+      
+      res.status(200).json(products);
+    // }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
   module.exports = {
     registerUserHandler,
+    getAllProductsEnabledHandler
   };

@@ -18,12 +18,12 @@ const AdminHandler = async (req, res) => {
       ) {
         throw Error("All fields are not complete");
       }
-      const newProduct = await createProduct(
+      const newProduct = await getAllAdmins(
       id,
       name,
       precio,
       descripcion,
-      userId
+      UserId
       );
       if (!newProduct) {
         throw Error("Product is not created");
