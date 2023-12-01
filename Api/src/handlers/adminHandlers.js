@@ -7,14 +7,19 @@ const AdminHandler = async (req, res) => {
       id,
       name,
       precio,
-      descripcion
+      descripcion,
+      type,
+      image
+
     } = req.body;
     try {
       if (
         !id ||
         !name ||
         !precio ||
-        !descripcion
+        !descripcion||
+        !type||
+        !image
       ) {
         throw Error("All fields are not complete");
       }
@@ -23,6 +28,8 @@ const AdminHandler = async (req, res) => {
       name,
       precio,
       descripcion,
+      type,
+      image,
       UserId
       );
       if (!newProduct) {
