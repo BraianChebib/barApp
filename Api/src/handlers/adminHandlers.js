@@ -1,8 +1,7 @@
-const { getAllAdmins } = require("../controllers/adminControllers");
+const { getAllAdmins, getAllUs } = require("../controllers/adminControllers");
 
 const AdminHandler = async (req, res) => {
      const { UserId } = req.params;
-     console.log(UserId);
     const {
       id,
       name,
@@ -34,6 +33,22 @@ const AdminHandler = async (req, res) => {
     }
   };
 
+  const getAllUsers= async (req, res) => {
+    try {
+        const user = await getAllUs();
+
+        if (user.length === 0) {
+          return res.status(404).json({ message: "There are not products" });
+        }
+
+        res.status(200).json(user);
+      // }
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+
 module.exports = {
-    AdminHandler
+    AdminHandler,
+    getAllUsers
 }

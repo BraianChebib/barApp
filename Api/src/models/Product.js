@@ -7,9 +7,9 @@ module.exports = (sequelize) => {
     "Product",
     {
       id: {
-        type: DataTypes.INTEGER, //UUID es para que genere un número random con letras/números y único, habilitado en sql
+        type: DataTypes.INTEGER,
+        autoIncrement: true,  //UUID es para que genere un número random con letras/números y único, habilitado en sql
         primaryKey: true,
-        allowNull: false,
       },
       name: {
         type: DataTypes.STRING,
@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       type: {
-        type: DataTypes.ENUM("Bebidas", "Platos", "Postres"),
+        type: DataTypes.STRING,
       },
       quantity: {
         type: DataTypes.INTEGER,

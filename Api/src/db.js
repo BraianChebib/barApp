@@ -56,10 +56,6 @@ const { Favorite, Product, Reservation, Review, Table, Users } = sequelize.model
  Users.hasMany(Review);
  Review.belongsTo(Users);
 
-Users.hasMany(Favorite);
-Favorite.belongsTo(Users);
-
-Product.hasOne(Favorite);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

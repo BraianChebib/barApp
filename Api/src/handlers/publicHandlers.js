@@ -3,7 +3,11 @@ const {
     createUsers,
     searchProductName,
     getAllProducts,
+    upDateProduct,
+    favouriteUser
   } = require("../controllers/publicControllers");
+
+  const {Favorite} = require ("../db");
 
   const registerUserHandler = async (req, res) => {
     var { email, id, name, lastname, phone, role } = req.body;
@@ -50,8 +54,48 @@ const {
   }
 };
 
+
+const upDateProducto = async (req, res) => {
+  const { id } = req.params;
+  const { name, precio, descripcion, image, enabled, type } = req.body;
+
+  try {
+    const property = await upDateProduct(id);
+
+    if (!property) {
+      throw new Error("property not found");
+    }
+    if (name) {
+      property.name = name;
+    }
+    if (precio) {
+      property.precio = precio;
+    }
+    if (descripcion) {
+      property.descripcion = descripcion;
+    }
+    if (image) {
+      property.image = image;
+    }
+    if (enabled) {
+      property.enabled = enabled;
+    }
+    if (type) {
+      property.type = type;
+    }
+
+    await property.save();
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
   module.exports = {
     registerUserHandler,
     getAllProductsEnabledHandler,
-    getProduct
+    getProduct,
+    upDateProducto,
   };

@@ -4,9 +4,10 @@ const {
   registerUserHandler,
   getProduct,
   getAllProductsEnabledHandler,
+  upDateProducto,
 } = require("../handlers/publicHandlers");
 
-const {upDate} = require ("../handlers/userHandlers")
+const {upDate, favUser} = require ("../handlers/userHandlers");
 
 const publicRouter = Router();
 
@@ -14,9 +15,17 @@ const publicRouter = Router();
 
 //Registro de usuario
 publicRouter.post("/register", registerUserHandler);
-publicRouter.put("/register/:id", upDate);
+//Modificar datos del usuario
+publicRouter.put("/upDateUser/:id", upDate);
+//producto marcado como favorito por el usuario
+publicRouter.post("/favourite/:userId", favUser);
+//modificicacion del producto
+publicRouter.put("/product/:id", upDateProducto);
+//mostrar producto buscado por nombre
 publicRouter.get("/product/:nombre", getProduct);
-publicRouter.get("/product", getAllProductsEnabledHandler)
+//mostrar todos los productos
+publicRouter.get("/product", getAllProductsEnabledHandler);
+
 
 
 module.exports = publicRouter;

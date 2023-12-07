@@ -35,6 +35,15 @@ const getAllAdmins = async (id, name, precio, descripcion, UserId) => {
   }
 };
 
+const getAllUs = async () => {
+  try {
+    const products = await Users.findAll();
+    return products;
+  } catch (error) {
+    throw new Error("Error getting all products");
+  }
+};
 module.exports = {
-    getAllAdmins
+    getAllAdmins,
+    getAllUs
 };

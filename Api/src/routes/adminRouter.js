@@ -2,6 +2,7 @@ const { Router } = require("express");
 
 const {
     AdminHandler,
+    getAllUsers
 } = require("../handlers/adminHandlers");
 
 const adminRouter = Router();
@@ -10,6 +11,7 @@ const adminRouter = Router();
 
 //Registro de usuario
 adminRouter.post("/product/:UserId", AdminHandler);
+adminRouter.get("/getAllUsers", getAllUsers);
 
 
 module.exports = adminRouter;
