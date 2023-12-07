@@ -15,7 +15,7 @@ const Menu = () =>{
       }, []);
     
     return(
-        <div>
+        <div className='max-w-full h-screen bg-black flex flex-wrap items-start justify-center pt-6'>
             {products.map((props) => (
                
                <Card
