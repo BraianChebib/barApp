@@ -1,4 +1,5 @@
 const { Users, Product } = require("../db");
+const { Op } = require("sequelize");
 
 const createUsers = async (email, id, name, lastname, phone, role) => {
   const [newUser, created] = await Users.findOrCreate({
@@ -14,14 +15,26 @@ const createUsers = async (email, id, name, lastname, phone, role) => {
   return newUser;
 };
 
-const searchProductName = async (name) => {
-  const databaseProduct = await Product.findOne({
-    where: {
-      name: name,
-    },
-  });
+const getProductsByName = async (name) => {
+  try {
+    const products = await Product.findAll({
+      where: {
 
-  return databaseProduct;
+        name: { [Op.iLike]: "%" + name + "%" },
+      },
+  
+    });
+    if(products.length !== 0){
+      return products
+    }else{
+      throw new Error("No se encontraron propiedad con este nombre")
+    }
+    
+    
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error al realizar la busqueda")
+  }
 };
 const getAllProducts = async () => {
   try {
@@ -39,4 +52,5 @@ const getAllProducts = async () => {
 module.exports = {
   createUsers,
   getAllProducts,
+  getProductsByName,
 };
