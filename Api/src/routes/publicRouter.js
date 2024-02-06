@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const {
   registerUserHandler,
-  getProduct,
+  getProductByNameHandler,
   getAllProductsEnabledHandler,
 } = require("../handlers/publicHandlers");
 
@@ -15,7 +15,7 @@ const publicRouter = Router();
 //Registro de usuario
 publicRouter.post("/register", registerUserHandler);
 publicRouter.put("/register/:id", upDate);
-publicRouter.get("/product/:nombre", getProduct);
+// publicRouter.get("/products", getProductByNameHandler);
 publicRouter.get("/product", getAllProductsEnabledHandler)
 
 
