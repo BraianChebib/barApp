@@ -1,31 +1,37 @@
 import Card from '../../inc/Card/Card';
 // import characters from '../../../assets/data';
 import * as actions from "../../../redux/actions"
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Menu = () =>{
+const Menu = () => {
     const dispatch = useDispatch();
     const products = useSelector((state) => state.products);
 
     useEffect(() => {
         dispatch(actions.getAllProducts()).catch((error) => {
-          console.error(error);
+            console.error(error);
         });
-      }, []);
-    
-    return(
-        <div className='max-w-full h-screen bg-black flex flex-wrap items-start justify-center pt-6'>
+    }, []);
+
+    return (
+        <div className='max-w-full h-screen bg-black flex flex-wrap items-start justify-center '>
+            <div className='flex justify-between w-full h-14'>
+                <button className='text-red-50 border-b-2 border-r-2 flex-grow flex-shrink'>Platos</button>
+                <button className='text-red-50 border-b-2 border-r-2 flex-grow flex-shrink'>Bebidas</button>
+                <button className='text-red-50 border-b-2  flex-grow flex-shrink'>Postres</button>
+            </div>
+            
             {products.map((props) => (
-               
-               <Card
-                   key={props.id}
-                   name={props.name}
-                   precio={props.precio}
-                   descripcion={props.descripcion}
-                   image={props.image}
-               />
-           ))}
+
+                <Card
+                    key={props.id}
+                    name={props.name}
+                    precio={props.precio}
+                    descripcion={props.descripcion}
+                    image={props.image}
+                />
+            ))}
 
         </div>
     )
