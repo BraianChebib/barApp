@@ -1,2 +1,3 @@
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME";
+export const APPLY_FILTERS = "APPLY_FILTERS"
