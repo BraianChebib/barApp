@@ -1,5 +1,6 @@
 const { upDateUser } = require("../controllers/userControllers");
-const {favouriteUser} = require ("../controllers/userControllers")
+const {favouriteUser} = require ("../controllers/userControllers");
+
 const upDate = async (req, res) => {
   const { id } = req.params;
   const { name, lastname, email, phone, image } = req.body;
@@ -34,7 +35,6 @@ const upDate = async (req, res) => {
 };
 
 const favUser = async (req, res) => {
- console.log("hola");
   const { userId } = req.params;
   const {productId} = req.body
    console.log(userId);

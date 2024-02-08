@@ -15,9 +15,16 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      availability: {
+      availabiliyt: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+      },
+      fecha: {
+        type: DataTypes.DATEONLY,
+      },
+      hora: {
+        type: DataTypes.TIME,
+         unique: true,
       },
     },
     { timestamps: false }
