@@ -2,7 +2,7 @@ import 'tailwindcss/tailwind.css';
 
 const Card = (props) => {
     return (
-        <div className="mt-5 rounded bg-neutral-900 w-11/12 h-30 ">
+        <div className="mt-10 rounded bg-neutral-900 w-11/12 h-30 ">
        
                 <div className='flex p-4 w-full space-x-26 items-start justify-center'>
                     <div className='w-40 text-neutral-400'>

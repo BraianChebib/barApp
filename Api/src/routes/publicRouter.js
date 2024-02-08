@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const {
   registerUserHandler,
-  getProduct,
+  getProductByNameHandler,
   getAllProductsEnabledHandler,
   upDateProducto,
 } = require("../handlers/publicHandlers");
