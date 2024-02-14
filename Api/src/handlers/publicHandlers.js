@@ -1,9 +1,14 @@
 //Importar los controllers
 const {
-  createUsers,
-  getProductsByName,
-  getAllProducts,
-} = require("../controllers/publicControllers");
+    createUsers,
+    searchProductName,
+    getAllProducts,
+    upDateProduct,
+    getProductsByName,
+    favouriteUser
+  } = require("../controllers/publicControllers");
+
+  const {Favorite} = require ("../db");
 
 const registerUserHandler = async (req, res) => {
   var { email, id, name, lastname, phone, role } = req.body;
@@ -26,6 +31,45 @@ const registerUserHandler = async (req, res) => {
 };
 
 
+const upDateProducto = async (req, res) => {
+  const { id } = req.params;
+  const { name, precio, descripcion, image, enabled, type } = req.body;
+
+  try {
+    const property = await upDateProduct(id);
+
+    if (!property) {
+      throw new Error("property not found");
+    }
+    if (name) {
+      property.name = name;
+    }
+    if (precio) {
+      property.precio = precio;
+    }
+    if (descripcion) {
+      property.descripcion = descripcion;
+    }
+    if (image) {
+      property.image = image;
+    }
+    if (enabled) {
+      property.enabled = enabled;
+    }
+    if (type) {
+      property.type = type;
+    }
+
+    await property.save();
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+
+
+ 
 const getAllProductsEnabledHandler = async (req, res) => {
   const { name } = req.query;
   try {
@@ -44,8 +88,8 @@ const getAllProductsEnabledHandler = async (req, res) => {
     }
     res.status(200).json(products);
   } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    res.status(400).json({ error: error.message });
+  }
 
 }
 
@@ -53,4 +97,5 @@ const getAllProductsEnabledHandler = async (req, res) => {
 module.exports = {
   registerUserHandler,
   getAllProductsEnabledHandler,
+  upDateProducto,
 };

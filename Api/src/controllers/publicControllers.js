@@ -22,15 +22,13 @@ const getProductsByName = async (name) => {
 
         name: { [Op.iLike]: "%" + name + "%" },
       },
-  
+
     });
     if(products.length !== 0){
       return products
     }else{
       throw new Error("No se encontraron propiedad con este nombre")
     }
-    
-    
   } catch (error) {
     console.log(error);
     throw new Error("Error al realizar la busqueda")
@@ -46,8 +44,34 @@ const getAllProducts = async () => {
     return products;
   } catch (error) {
     throw new Error("Error getting all products");
-  }
+  }
 };
+
+// const favouriteUser = async (userId) => {
+//   const favourite = await Favorite.Create({nombre, userId: userId});
+
+//   return favourite;
+// };
+
+// const favouriteUser = async (userId) => {
+//   try {
+//     // const user = await Users.findByPk(id);
+
+//     const user = await Users.findOne({
+//       where: {
+//         userId: userId,
+//       },
+//     });
+
+//     return user;
+
+//   } catch (error) {
+//     console.error("Error al modificar datos del usuario:", error);
+//     res.status(500).json({ error: "Error interno del servidor" });
+//   }
+// };
+
+
 
 module.exports = {
   createUsers,

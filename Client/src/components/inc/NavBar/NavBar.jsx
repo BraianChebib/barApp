@@ -43,7 +43,7 @@ const NavBar = () => {
             {/* Input de búsqueda */}
             {isInputOpen && (
                <div className={`absolute top-0 right-0 h-full border-b-2 flex justify-center bg-black text-neutral-400 transition-all duration-300 transform ${isInputOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-              
+
                <form onSubmit={handleSubmit} className="flex items-center justify-center">
                    <input
                        name="search"
@@ -62,7 +62,6 @@ const NavBar = () => {
                    <button onClick={toggleInput} className="p-4 text-white">
                        <IoIosArrowForward className="text-3xl" />
                    </button>
-              
            </div>
             )}
 
@@ -85,6 +84,9 @@ const NavBar = () => {
                 {/* Menú lateral desplegable */}
                 <div className={`${isOpen ? 'block' : 'hidden'} lg:hidden bg-black absolute top-20 right-0  border-l w-2/4 `}>
                     <ul className="text-center">
+                    <li className="py-2 border-b border-gray-700">
+                            <Link to="/createProduct" className="block p-2 hover:bg-gray-800" onClick={closeMenu}>Crear Producto</Link>
+                        </li>
                         <li className="py-2 border-b border-gray-700">
                             <Link to="/" className="block p-2 hover:bg-gray-800" onClick={closeMenu}>Home</Link>
                         </li>
@@ -104,4 +106,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar;
+export default NavBar;

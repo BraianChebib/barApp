@@ -1,4 +1,4 @@
-const { Users } = require("../db");
+const { Users, Product } = require("../db");
 
 const upDateUser = async (id) => {
   try {
@@ -10,15 +10,36 @@ const upDateUser = async (id) => {
       },
     });
 
-    // if (!user) {
-    //   return res.status(404).json({ error: "Usuario no encontrado" });
-    // }
     return user;
-
   } catch (error) {
     console.error("Error al modificar datos del usuario:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 };
 
-module.exports = { upDateUser };
+const favouriteUser = async (userId, productId) => {
+  // const favProduct = 2;
+  // const usuario = "primero";
+  const producto = await Product.findByPk(productId);
+  const usuario = await Users.findByPk(userId);
+ console.log(producto);
+  if (!producto) {
+    return "producto not found";
+  }
+
+  if (!usuario) {
+    return "user not found";
+  }
+
+  // if (!usuario.favorite.include(favProduct)) {
+  //   return "product include";
+  // }
+
+  const result = await usuario.update({
+    favorite: [...usuario.favorite, productId],
+  });
+
+  return result;
+};
+
+module.exports = { upDateUser, favouriteUser };

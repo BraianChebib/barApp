@@ -1,6 +1,6 @@
 const { Users, Product } = require("../db");
 
-const getAllAdmins = async (id, name, precio, descripcion, type, image, UserId) => {
+const getAllAdmins = async ( name, precio, descripcion, type, image, UserId) => {
   try {
     // Obtener todos los administradores
     const admins = await Users.findAll({
@@ -15,9 +15,8 @@ const getAllAdmins = async (id, name, precio, descripcion, type, image, UserId) 
         try {
           // Buscar o crear el producto para el administrador actual
           const [product, created] = await Product.findOrCreate({
-            where: { id, name, UserId: admin.id }, // Ajustar la condición de búsqueda
+            where: { name, UserId: admin.id }, // Ajustar la condición de búsqueda
             defaults: {
-              id,
               name,
               precio,
               descripcion,
@@ -47,6 +46,45 @@ const getAllAdmins = async (id, name, precio, descripcion, type, image, UserId) 
   }
 };
 
+const getAllUs = async () => {
+  try {
+    const products = await Users.findAll();
+    return products;
+  } catch (error) {
+    throw new Error("Error getting all products");
+  }
+};
+
+const upDateProduct = async (id) => {
+  try {
+    // const user = await Users.findByPk(id);
+
+    const Producto = await Product.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    return Producto;
+  } catch (error) {
+    console.error("Error al modificar datos del producto:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+};
+
+   const deleteUS = async (id)=>{
+        const  userExist = Users.findByPk(id);
+
+      if(!userExist){
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+      }else{
+         return userExist;
+      }
+   }
+ 
 module.exports = {
-    getAllAdmins
+    getAllAdmins,
+    getAllUs,
+    upDateProduct,
+    deleteUS
 };
