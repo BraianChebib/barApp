@@ -44,22 +44,7 @@ const getAllProducts = async () => {
     return products;
   } catch (error) {
     throw new Error("Error getting all products");
-  }
-};
-
-const upDateProduct = async (id) => {
-  try {
-    const product = await Product.findOne({
-      where: {
-        id: id,
-      },
-    });
-
-    return product;
-  } catch (error) {
-    console.error("Error al modificar datos del usuario:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
+  }
 };
 
 // const favouriteUser = async (userId) => {

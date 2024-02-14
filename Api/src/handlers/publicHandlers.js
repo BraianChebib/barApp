@@ -4,6 +4,7 @@ const {
     searchProductName,
     getAllProducts,
     upDateProduct,
+    getProductsByName,
     favouriteUser
   } = require("../controllers/publicControllers");
 
@@ -87,8 +88,8 @@ const getAllProductsEnabledHandler = async (req, res) => {
     }
     res.status(200).json(products);
   } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+    res.status(400).json({ error: error.message });
+  }
 
 }
 
@@ -96,6 +97,5 @@ const getAllProductsEnabledHandler = async (req, res) => {
 module.exports = {
   registerUserHandler,
   getAllProductsEnabledHandler,
-  getProduct,
   upDateProducto,
 };

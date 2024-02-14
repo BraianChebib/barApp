@@ -2,6 +2,7 @@ import {
     APPLY_FILTERS,
     GET_ALL_PRODUCTS,
     SEARCH_BY_NAME,
+    POST_PRODUCT
   } from "./actionTypes";
 
 const initialState = {
@@ -38,6 +39,13 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 properties: filteringProducts,
             }
+
+        case POST_PRODUCT:
+           return{
+            ...state,
+            products: [...state.products, action.payload],
+            allProducts: [...state.allProducts, action.payload],
+           }
 
 
         default:

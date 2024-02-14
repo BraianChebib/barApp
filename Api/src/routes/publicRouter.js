@@ -21,8 +21,6 @@ publicRouter.put("/upDateUser/:id", upDate);
 publicRouter.post("/favourite/:userId", favUser);
 //modificicacion del producto
 publicRouter.put("/product/:id", upDateProducto);
-//mostrar producto buscado por nombre
-publicRouter.get("/product/:nombre", getProduct);
 //mostrar todos los productos
 publicRouter.get("/product", getAllProductsEnabledHandler);
 
