@@ -21,8 +21,7 @@ const getAllAdmins = async ( name, precio, descripcion, type, image, UserId) => 
               precio,
               descripcion,
               type,
-              image,
-              UserId: admin.id,
+              image
             },
           });
 
