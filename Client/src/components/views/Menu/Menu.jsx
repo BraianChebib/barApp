@@ -8,6 +8,7 @@ const Menu = () => {
     const products = useSelector((state) => state.products);
     const [filtro, setFiltro] = useState(null); // Inicializar con null o vacío
 
+
     useEffect(() => {
         dispatch(getAllProducts()).catch((error) => {
             console.error(error);
@@ -44,6 +45,7 @@ const Menu = () => {
             {filteredProducts.map((props) => (
                 <Card
                     key={props.id}
+                    id={props.id}
                     name={props.name}
                     precio={props.precio}
                     descripcion={props.descripcion}

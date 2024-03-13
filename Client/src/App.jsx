@@ -8,7 +8,7 @@ import ProductCreate from './components/form/FormProduct/FormProduct';
 function App() {
 
     return (
-        <div className="max-w-full h-screen  ">
+        <div className="max-w-full h-screenz  ">
              <NavBar></NavBar>
             <Routes>
 
