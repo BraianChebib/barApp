@@ -11,13 +11,13 @@ const {
   const {Favorite} = require ("../db");
 
 const registerUserHandler = async (req, res) => {
-  var { email, id, name, lastname, phone, role } = req.body;
+  var { email, id, name, lastname} = req.body;
 
   try {
     if (!email || !name || !lastname) {
       throw new Error("All fields are not complete");
     }
-    const newUser = await createUsers(email, id, name, lastname, phone, role);
+    const newUser = await createUsers(email, id, name, lastname);
     if (!newUser) {
 
       throw new Error("User not created");

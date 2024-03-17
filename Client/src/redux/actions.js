@@ -5,11 +5,13 @@ import {
   APPLY_FILTERS,
   POST_PRODUCT,
   ADD_TO_CAR,
-  REMOVE_ALL_FROM_CAR,
   REMOVE_ONE_FROM_CAR,
   CLEAR_CART,
   REMOVE_ALL_CAR,
-  ADD_ONE_CANT_CART
+  ADD_ONE_CANT_CART,
+  REGISTER,
+  LOGIN,
+  LOGOUT,
 
 } from "./actionTypes";
 
@@ -76,6 +78,30 @@ export function postProduct(product, id) {
   }
 }
 
+export function register(userData) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.post(`${url}/public/register`,userData);
+    
+      return dispatch({
+        type: REGISTER,
+        payload: res.data, 
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+}
+
+//se le pasa un id al loguearse
+export const login = (id) => ({
+  type: LOGIN,
+  payload: id,
+});
+//salir sesion
+export const logout = () => ({
+  type: LOGOUT,
+});
 //AGREGAR UN PRODUCTO AL CARRITO
 export const addToCar = (id) => ({
   type: ADD_TO_CAR,

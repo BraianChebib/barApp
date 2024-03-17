@@ -1,12 +1,12 @@
 const { Users, Product } = require("../db");
 const { Op } = require("sequelize");
 
-const createUsers = async (email, id, name, lastname, phone, role) => {
+const createUsers = async (email, id, name, lastname) => {
   const [newUser, created] = await Users.findOrCreate({
     //busca por estos datos al usuario
-    where: { email, id, name, lastname, phone, role },
+    where: { email, id},
     //sino lo encuentra lo crea con los valores del defaults
-    defaults: { email, id, name, lastname, phone, role },
+    defaults: { email, id, name, lastname},
   });
   if (!created) {
     throw new Error("User already exists");
