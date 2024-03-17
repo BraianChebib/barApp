@@ -8,3 +8,6 @@ export const REMOVE_ONE_FROM_CAR ="REMOVE_ONE_FROM_CAR";
 export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_ALL_CAR = "REMOVE_ALL_CAR";
 export const ADD_ONE_CANT_CART = "ADD_ONE_CANT_CART";
+export const REGISTER = "REGISTER";
+export const LOGIN ="LOGIN";
+export const LOGOUT = "LOGOUT";

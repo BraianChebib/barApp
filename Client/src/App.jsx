@@ -4,6 +4,8 @@ import Menu from './components/views/Menu/Menu'
 import NavBar from './components/inc/NavBar/NavBar';
 import Landing from './components/views/Landing/Landing';
 import ProductCreate from './components/form/FormProduct/FormProduct';
+import LoginPanel from './components/inc/LoginPanel';
+import RegisterPanel from './components/inc/RegisterPanel'
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
                 <Route exact path="/"element={<Landing />} />
                 <Route path="/menu" element={<Menu/>}></Route>
                 <Route path="/createProduct" element={<ProductCreate/>}></Route>
+                <Route path="/loginPanel" element={<LoginPanel/>}></Route>
+                <Route path="/registerPanel" element={<RegisterPanel/>}></Route>
             </Routes>
 
         </div>

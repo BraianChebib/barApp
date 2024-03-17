@@ -9,6 +9,9 @@ import {
     CLEAR_CART,
     REMOVE_ALL_CAR,
     ADD_ONE_CANT_CART,
+    REGISTER,
+    LOGIN,
+    LOGOUT,
 } from "./actionTypes";
 
 const initialState = {
@@ -16,6 +19,9 @@ const initialState = {
     allProducts: [],
     searchTerm: "",
     cart: JSON.parse(localStorage.getItem('cart')) || [],
+    user: {},
+    loggedIn: Boolean(localStorage.getItem("loggedIn")) || false,
+    id: '',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -119,22 +125,42 @@ const rootReducer = (state = initialState, action) => {
                 cart: updatedCartAfterRemoval,
             };
 
-            case ADD_ONE_CANT_CART:
-                const updatedCartAfterAddition = state.cart.map((item) =>
-                    item.id === action.payload
-                        ? { ...item, quantity: item.quantity + 1 }
-                        : item
-                );
-            
-                // Actualizar localStorage
-                localStorage.setItem('cart', JSON.stringify(updatedCartAfterAddition));
-            
-                return {
-                    ...state,
-                    cart: updatedCartAfterAddition,
-                };
+        case ADD_ONE_CANT_CART:
+            const updatedCartAfterAddition = state.cart.map((item) =>
+                item.id === action.payload
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+
+            // Actualizar localStorage
+            localStorage.setItem('cart', JSON.stringify(updatedCartAfterAddition));
+
+            return {
+                ...state,
+                cart: updatedCartAfterAddition,
+            };
         case CLEAR_CART:
             return initialState;
+
+        case REGISTER:
+            return {
+                ...state
+            };
+        case LOGIN:
+            localStorage.setItem("loggedIn", action.payload);
+            return {
+                ...state,
+                loggedIn: action.payload,
+                id: action.payload
+            };
+
+        case LOGOUT:
+            localStorage.setItem("loggedIn", "");
+            return {
+                ...state,
+                loggedIn: false,
+                user: {},
+            };
 
 
         default:

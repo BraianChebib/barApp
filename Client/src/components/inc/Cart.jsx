@@ -23,7 +23,7 @@ const Cart = (props) => {
     const subtotal= props.quantity * props.precio
 
     return (
-        <div className="bg-black py-4 min-h-full px-6 mb-4 rounded-lg shadow-lg z-2">
+        <div className="bg-black py-4 min-h-full px-6 mb-4 rounded-lg z-2 ">
 
             <div className='flex justify-between items-center'>
                 <div className='w-20 h-16 overflow-hidden rounded-md mr-4'>

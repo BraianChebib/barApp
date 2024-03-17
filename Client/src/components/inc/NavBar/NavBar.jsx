@@ -6,6 +6,8 @@ import { useLocation } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { IoMenuOutline } from "react-icons/io5";
 import { IoCartSharp } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa6";
+import { IoMdMore } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import CartPage from '../CartPage';
@@ -89,10 +91,12 @@ const NavBar = () => {
                     <img className="w-16 h-14 p-1" src={logo} alt="" />
                 </div>
                 <div className="flex">
-                    <button onClick={toggleInput} className="bg-transparent border-transparent p-2 rounded-lg hover:border-white">
-                        <BsSearch className="text-2xl text-red-50" />
-                    </button>
-                    {showCartIcon && (
+                    {location.pathname !== '/' && ( // Verifica si la ubicación es diferente de '/menu'
+                        <button onClick={toggleInput} className="bg-transparent border-transparent p-2 rounded-lg hover:border-white">
+                            <BsSearch className="text-2xl text-red-50" />
+                        </button>
+                    )}
+                    {showCartIcon && location.pathname !== '/' && ( // Verifica si la ubicación es diferente de '/menu'
                         <button onClick={toggleCart} className="block lg:hidden relative p-2">
                             <IoCartSharp className="text-3xl text-red-50" />
                             {totalQuantity > 0 && (
@@ -102,9 +106,15 @@ const NavBar = () => {
                             )}
                         </button>
                     )}
-                    <button className="block lg:hidden p-2" onClick={toggleMenu}>
-                        <IoMenuOutline className="text-4xl text-red-50" />
+                    <button className="block lg:hidden p-2">
+                        <Link to="/LoginPanel">
+                            <FaRegUser className="text-2xl text-red-50" />
+                        </Link>
                     </button>
+                    <button className="block lg:hidden p-1" onClick={toggleMenu}>
+                        <IoMdMore className="text-4xl text-red-50" />
+                    </button>
+
                 </div>
                 <div className={`${isOpen ? 'block' : 'hidden'} lg:hidden bg-black absolute top-20 right-0  border-l w-2/4 `}>
                     <ul className="text-center">
