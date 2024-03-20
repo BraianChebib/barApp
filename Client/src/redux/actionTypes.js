@@ -11,3 +11,4 @@ export const ADD_ONE_CANT_CART = "ADD_ONE_CANT_CART";
 export const REGISTER = "REGISTER";
 export const LOGIN ="LOGIN";
 export const LOGOUT = "LOGOUT";
+export const GET_USER = "GET_USER";

@@ -12,10 +12,25 @@ import {
   REGISTER,
   LOGIN,
   LOGOUT,
+  GET_USER,
 
 } from "./actionTypes";
 
 const url = `http://localhost:3001`;
+
+export const getUser = (id) => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get(`${url}/user/info/${id}`); //get User
+      return dispatch({
+        type: GET_USER,
+        payload: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 export function getAllProducts() {
   return async function (dispatch) {

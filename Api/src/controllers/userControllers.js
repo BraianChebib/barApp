@@ -1,5 +1,16 @@
 const { Users, Product } = require("../db");
 
+
+//Se obtendra al usuario buscando en la BDD por su ID
+const getUserById = async (id) => {
+  try {
+    const user = await Users.findByPk(id);
+    return user;
+  } catch (error) {
+    throw new Error("Error getting user by id");
+  }
+};
+
 const upDateUser = async (id) => {
   try {
     // const user = await Users.findByPk(id);
@@ -42,4 +53,4 @@ const favouriteUser = async (userId, productId) => {
   return result;
 };
 
-module.exports = { upDateUser, favouriteUser };
+module.exports = { upDateUser, favouriteUser, getUserById};

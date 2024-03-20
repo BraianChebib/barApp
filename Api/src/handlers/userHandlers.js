@@ -1,5 +1,18 @@
-const { upDateUser } = require("../controllers/userControllers");
-const {favouriteUser} = require ("../controllers/userControllers");
+const {getUserById, upDateUser, favouriteUser } = require("../controllers/userControllers");
+
+//Usuario por ID
+const getUserByIdHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await getUserById(id);
+    if (!user) {
+      throw Error("User not found");
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+};
 
 const upDate = async (req, res) => {
   const { id } = req.params;
@@ -57,5 +70,6 @@ const favUser = async (req, res) => {
 
 module.exports = {
   upDate,
-  favUser
+  favUser,
+  getUserByIdHandler
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, sendEmailVerification } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { register } from "../../redux/actions";
+import { register, getUser, login } from "../../redux/actions";
 import firebaseApp from "../../fb";
 import { Link } from "react-router-dom";
 import { PiUserCircleLight } from "react-icons/pi";
@@ -34,49 +34,59 @@ const LoginPanel = () => {
                 formData.email,
                 formData.password
             );
+            const token = await user.getIdToken();
 
-            setFormData({
-                email: "",
-                password: "",
-            });
+            // console.log(token);
+            console.log("Sesión iniciada");
 
-            // alert("Logged in"); // usar otro tipo de alerta
+            // Obtener el ID del usuario
+            const id = user.uid;
+
+            // Obtener información del usuario
+            dispatch(getUser(id));
+            dispatch(login(id))
+            
+            // Resto del código...
         } catch (error) {
             const errorMessage = error.message;
             setError(errorMessage);
         }
     };
 
+
     const loginGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, gProvider);
-            const id = result.user.uid;
+            const id = result.user.uid; // Accede a result.user en lugar de user
             const email = result.user.email;
             const nameUser = result.user.displayName;
             const nameArray = nameUser.split(' ');
-
+            const token = await result.user.getIdToken(); // Accede a result.user en lugar de user
+    
+            dispatch(login(id));
+    
             const name = nameArray[0];
             const lastname = nameArray.slice(1).join(' ');
-
+    
             const sendVerificationEmail = async () => {
                 await sendEmailVerification(auth.currentUser);
             };
-
+    
             sendVerificationEmail().catch((error) => console.log(error));
-
+    
             const userData = {
                 email,
                 id,
                 name,
                 lastname
             };
-
+    
             dispatch(register(userData));
+        
         } catch (error) {
             setError(error.message);
         }
     };
-
     return (
         <div className="flex flex-col items-center justify-center ">
             <form onSubmit={handleSubmit} className="flex flex-col w-full p-10  items-center justify-center">
@@ -123,8 +133,6 @@ const LoginPanel = () => {
                 </button>
 
                 <Link to={"/registerPanel"}><h3 className="mt-6 text-blue-500 underline">Crear cuenta</h3></Link>
-
-                
 
             </form>
 

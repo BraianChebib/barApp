@@ -12,6 +12,7 @@ import {
     REGISTER,
     LOGIN,
     LOGOUT,
+    GET_USER,
 } from "./actionTypes";
 
 const initialState = {
@@ -160,6 +161,12 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 loggedIn: false,
                 user: {},
+            };
+
+        case GET_USER:
+            return {
+                ...state,
+                user: action.payload,
             };
 
 
