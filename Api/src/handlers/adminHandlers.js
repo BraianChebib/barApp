@@ -1,4 +1,4 @@
-const { getAllAdmins, getAllUs, upDateProduct, deleteUS } = require("../controllers/adminControllers");
+const { getAllAdmins, getAllUs, upDateProduct, deleteUS, deleteProduct } = require("../controllers/adminControllers");
 
 const AdminHandler = async (req, res) => {
      const { UserId } = req.params;
@@ -104,9 +104,22 @@ const AdminHandler = async (req, res) => {
     }
   }
 
+  const handlerDeleteProduct = async (req, res)=>{
+    const { id } = req.params;
+
+  try {
+    await deleteProduct(id);
+    res.status(200).json({ message: 'Producto eliminado exitosamente' });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+
+  } 
+
 module.exports = {
     AdminHandler,
     getAllUsers,
     udDateProduct,
-    deleteUser
+    deleteUser,
+    handlerDeleteProduct
 }

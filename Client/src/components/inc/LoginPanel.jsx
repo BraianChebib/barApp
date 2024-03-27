@@ -3,14 +3,14 @@ import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopu
 import { useDispatch } from "react-redux";
 import { register, getUser, login } from "../../redux/actions";
 import firebaseApp from "../../fb";
-import { Link } from "react-router-dom";
-import { PiUserCircleLight } from "react-icons/pi";
+import { Link, useNavigate } from "react-router-dom";
 
 const auth = getAuth(firebaseApp);
 const gProvider = new GoogleAuthProvider();
 
 const LoginPanel = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -45,8 +45,7 @@ const LoginPanel = () => {
             // Obtener información del usuario
             dispatch(getUser(id));
             dispatch(login(id))
-            
-            // Resto del código...
+            navigate('/')
         } catch (error) {
             const errorMessage = error.message;
             setError(errorMessage);
@@ -62,27 +61,28 @@ const LoginPanel = () => {
             const nameUser = result.user.displayName;
             const nameArray = nameUser.split(' ');
             const token = await result.user.getIdToken(); // Accede a result.user en lugar de user
-    
+
             dispatch(login(id));
-    
+            navigate('/')
+
             const name = nameArray[0];
             const lastname = nameArray.slice(1).join(' ');
-    
+
             const sendVerificationEmail = async () => {
                 await sendEmailVerification(auth.currentUser);
             };
-    
+
             sendVerificationEmail().catch((error) => console.log(error));
-    
+
             const userData = {
                 email,
                 id,
                 name,
                 lastname
             };
-    
+
             dispatch(register(userData));
-        
+
         } catch (error) {
             setError(error.message);
         }

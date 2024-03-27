@@ -1,6 +1,6 @@
 const { Users, Product } = require("../db");
 
-const getAllAdmins = async ( name, precio, descripcion, type, image, UserId) => {
+const getAllAdmins = async (name, precio, descripcion, type, image, UserId) => {
   try {
     // Obtener todos los administradores
     const admins = await Users.findAll({
@@ -71,19 +71,30 @@ const upDateProduct = async (id) => {
   }
 };
 
-   const deleteUS = async (id)=>{
-        const  userExist = Users.findByPk(id);
+const deleteUS = async (id) => {
+  const userExist = Users.findByPk(id);
 
-      if(!userExist){
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }else{
-         return userExist;
-      }
-   }
- 
+  if (!userExist) {
+    return res.status(404).json({ message: 'Usuario no encontrado' });
+  } else {
+    return userExist;
+  }
+}
+
+const deleteProduct = async (id) => {
+  const product = await Product.findByPk(id);
+
+  if (!product) {
+    throw new Error('Producto no encontrado');
+  }
+
+  return product.destroy();
+}
+
 module.exports = {
-    getAllAdmins,
-    getAllUs,
-    upDateProduct,
-    deleteUS
+  getAllAdmins,
+  getAllUs,
+  upDateProduct,
+  deleteUS,
+  deleteProduct,
 };

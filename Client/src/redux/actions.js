@@ -4,6 +4,7 @@ import {
   SEARCH_BY_NAME,
   APPLY_FILTERS,
   POST_PRODUCT,
+  UPDATE_PRODUCT,
   ADD_TO_CAR,
   REMOVE_ONE_FROM_CAR,
   CLEAR_CART,
@@ -13,6 +14,7 @@ import {
   LOGIN,
   LOGOUT,
   GET_USER,
+  DELETE_PRODUCT,
 
 } from "./actionTypes";
 
@@ -78,13 +80,40 @@ export function applyFilters(filterByTypes) {
 }
 
 export function postProduct(product, id) {
-  console.log(id);
   return async function (dispatch) {
     try {
       const res = await axios.post(`${url}/admin/product/${id}`, product);
       console.log(res.data);
       return dispatch({
         type: POST_PRODUCT,
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+}
+
+export function updateProduct(product, id){
+  return async function (dispatch) {
+    try {
+      const res = await axios.put(`${url}/admin/updateProduct/${id}`, product);
+      return dispatch({
+        type: UPDATE_PRODUCT,
+        payload: res.data
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+}
+export function deleteProduct(id){
+  console.log("ID a eliminar:", id);
+  return async function (dispatch) {
+    try {
+      const res = await axios.delete(`${url}/admin/deleteProduct/${id}`);
+      return dispatch({
+        type: DELETE_PRODUCT,
         payload: res.data
       })
     } catch (error) {

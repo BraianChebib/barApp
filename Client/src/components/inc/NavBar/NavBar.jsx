@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
@@ -10,7 +10,8 @@ import { getAuth, signOut } from 'firebase/auth';
 import firebaseApp from '../../../fb';
 import { logout, searchProductsByName } from '../../../redux/actions';
 import CartPage from '../CartPage';
-import logo from '../../../assets/logo.png'; // Asegúrate de importar el logo adecuadamente
+import logo from '../../../assets/logo.png';
+import useClickAway from '../../../hooks/useClickAway';
 
 const auth = getAuth(firebaseApp);
 
@@ -25,6 +26,9 @@ const NavBar = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const user = useSelector(state => state.user);
+    const ref = useRef();
+
+    console.log(user)
 
     console.log(loggedIn)
 
@@ -46,6 +50,7 @@ const NavBar = () => {
 
         return () => unsubscribe();
     }, []);
+    
 
     const handleChange = (event) => {
         setName(event.target.value);
@@ -97,6 +102,9 @@ const NavBar = () => {
     const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
 
+    useClickAway(ref, closeMenu)
+
+
 
 
     return (
@@ -144,11 +152,14 @@ const NavBar = () => {
                         </button>
                     )}
                     {userProfile ? (
-                        <div className="block lg:hidden p-2">
-                            <div className="w-9 h-9 overflow-hidden rounded-full">
-                                <img src={userProfile} alt="Foto de perfil" className="w-full h-full object-cover" /> {/* Ajusta el tamaño de la imagen con "object-cover" */}
+                        <Link to='/profileUser'>
+                            <div className="block lg:hidden p-2">
+                                <div className="w-9 h-9 overflow-hidden rounded-full">
+                                    <img src={userProfile} alt="Foto de perfil" className="w-full h-full object-cover" /> {/* Ajusta el tamaño de la imagen con "object-cover" */}
+                                </div>
                             </div>
-                        </div>
+                        </Link>
+
 
                     ) : (
                         <button className="block lg:hidden p-2">
@@ -161,7 +172,7 @@ const NavBar = () => {
                         <IoMdMore className="text-4xl text-red-50" />
                     </button>
                 </div>
-                <div className={`${isOpen ? 'block' : 'hidden'} lg:hidden bg-black absolute top-20 right-0  border-l w-2/4 `}>
+                <div ref={ref} className={`${isOpen ? 'block' : 'hidden'} lg:hidden bg-black absolute top-20 right-0  border-l w-2/4 `}>
                     <ul className="text-center">
                         {/* Solo renderiza el boton si eres rol admin */
                             user.role === "admin" ? <li className="py-2 border-b border-gray-700">
@@ -184,7 +195,7 @@ const NavBar = () => {
                         {loggedIn && <li className="py-2 border-b border-gray-700">
                             <Link to="/" className="block p-2 hover:bg-gray-800" onClick={logoutHandle}>Cerrar Sesión</Link>
                         </li>}
-                        
+
                     </ul>
                 </div>
             </div>

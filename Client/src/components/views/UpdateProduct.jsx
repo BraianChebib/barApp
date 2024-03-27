@@ -1,26 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from 'react-router-dom';
-import { postProduct } from '../../redux/actions';
+import { useParams } from 'react-router-dom';
+import { updateProduct, deleteProduct } from '../../redux/actions';
 
-export default function FormProduct() {
-    const dispatch = useDispatch();
+const UpdateProduct = () => {
     const { id } = useParams();
+    const productos = useSelector(state => state.products);
+    const product = productos.find(product => product.id === parseInt(id));
+    const dispatch = useDispatch();
+
+    console.log(product)
+ 
+    
     const tipos = ["Bebidas", "Platos", "Postres"];
+
+    // Inicializar el estado con los datos del producto
     const [input, setInput] = useState({
-        name: "",
-        precio: "",
-        descripcion: "",
-        type: "",
-        image: "",
+        name: product ? product.name : "",
+        precio: product ? product.precio : "",
+        descripcion: product ? product.descripcion : "",
+        type: product && product.type ? product.type : "",
+        image: product ? product.image : "",
         UserId: id,
     });
 
+    // actualizo el estado cuando el producto cambia
+    useEffect(() => {
+        if (product) {
+            setInput({
+                name: product.name,
+                precio: product.precio,
+                descripcion: product.descripcion,
+                type: product && product.type ? product.type : "",
+                image: product.image,
+                UserId: id,
+            });
+        }
+    }, [product, id]);
+
     const handlerSubmit = (e) => {
         e.preventDefault();
-        console.log("soy input", input);
-        dispatch(postProduct(input, id));
-        alert("Producto creado con éxito! Se te redirigirá al inicio...");
+        dispatch(updateProduct(input, id));
+        alert("Producto modificado con éxito! Se te redirigirá al inicio...");
         setInput({
             name: "",
             precio: "",
@@ -34,40 +55,36 @@ export default function FormProduct() {
     const handlerChange = (e) => {
         setInput({
             ...input,
-            [e.target.name]: e.target.value, //al 'name' de los input se los modifico con los 'value' que pase el usuario
+            [e.target.name]: e.target.value,
         });
     }
 
     const handleSelect = (e) => {
-        console.log(e.target.value);
         setInput({
             ...input,
             type: e.target.value
         })
     }
 
+    const handleDelete = () => {
+        console.log(id)
+        dispatch(deleteProduct(id));
+    }
 
     return (
-        <>
+        <div>
             <div className="flex flex-col items-center justify-center">
-                {/* <div className="buttonBack"> */}
-                {/* <Link to="/">
-                   <button>← Back</button>
-                </Link> */}
-                {/* </div> */}
-
                 <div className="w-80 flex flex-col items-center justify-center">
-
                     <form onSubmit={(e) => handlerSubmit(e)} className="flex flex-col w-full p-10  items-center justify-center">
-                        <h1 className="text-3xl mb-6">New Product</h1>
+                        <h1 className="text-3xl mb-6">Update Product</h1>
                         <div className="text-left flex flex-col w-full">
-                            <label htmlFor="name" >Name: </label>
+                            <label htmlFor="name">Name: </label>
                             <input
                                 type="text"
                                 name="name"
                                 value={input.name}
                                 onChange={(e) => handlerChange(e)}
-                                className="mt-1 border h-9 bg-gray-300 border-gray-900">
+                                className="mt-1 border h-9 bg-gray-300 border-gray-900 p-2">
                             </input>
 
                             <label htmlFor="precio" className="mt-4">Precio: </label>
@@ -76,8 +93,7 @@ export default function FormProduct() {
                                 name="precio"
                                 value={input.precio}
                                 onChange={(e) => handlerChange(e)}
-                                className="mt-1 border h-9 bg-gray-300 border-gray-900">
-
+                                className="mt-1 border h-9 bg-gray-300 border-gray-900 p-2">
                             </input>
 
                             <label htmlFor="descripcion" className="mt-4">Descripcion: </label>
@@ -86,15 +102,14 @@ export default function FormProduct() {
                                 name="descripcion"
                                 value={input.descripcion}
                                 onChange={(e) => handlerChange(e)}
-                                className="mt-1 border h-9 bg-gray-300 border-gray-900">
-
+                                className="mt-1 border h-9 bg-gray-300 border-gray-900 p-2">
                             </input>
 
                             <label htmlFor="type" className="mt-4">Tipo: </label>
-                            <select name="type" onChange={(e) => handleSelect(e)} className="mt-1 border h-9 bg-gray-300 border-gray-900">
-                                <option value="">Selecciona un tipo</option>
+                            <select name="type" value={input.type} onChange={(e) => handleSelect(e)} className="mt-1 border h-9 bg-gray-300 border-gray-900">
+                            
                                 {tipos.map(ty => (
-                                    <option className="w-4" value={ty}>{ty}</option>
+                                    <option key={ty} value={ty}>{ty}</option>
                                 ))}
                             </select>
 
@@ -102,14 +117,22 @@ export default function FormProduct() {
                             <input type="text" name="image" value={input.image} onChange={(e) => handlerChange(e)}></input>
 
                             <button
-                                type="create"
+                                type="submit"
                                 className="mt-8 border-2 border-gray-500 w-full h-10  text-black">
-                                Crear Producto
+                                Actualizar Producto
+                            </button>
+                            <button
+                            type="button"
+                                className="mt-8 border-2 w-full h-10  text-white bg-red-500"
+                                onClick={handleDelete}>
+                                Eliminar Producto
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
+
+export default UpdateProduct;

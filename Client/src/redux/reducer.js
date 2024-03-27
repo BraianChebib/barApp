@@ -3,6 +3,8 @@ import {
     GET_ALL_PRODUCTS,
     SEARCH_BY_NAME,
     POST_PRODUCT,
+    UPDATE_PRODUCT,
+    DELETE_PRODUCT,
     ADD_TO_CAR,
     REMOVE_ALL_FROM_CAR,
     REMOVE_ONE_FROM_CAR,
@@ -60,6 +62,23 @@ const rootReducer = (state = initialState, action) => {
                 products: [...state.products, action.payload],
                 allProducts: [...state.allProducts, action.payload],
             }
+
+        case UPDATE_PRODUCT:
+            return {
+                ...state,
+                products: [...state.products, action.payload],
+                allProducts: [...state.allProducts, action.payload],
+            }
+
+        case DELETE_PRODUCT:
+            // Filtrar los productos y los productos totales para excluir el producto eliminado
+            const updatedProducts = state.products.filter(product => product.id !== action.payload.id);
+            const updatedAllProducts = state.allProducts.filter(product => product.id !== action.payload.id);
+            return {
+                ...state,
+                products: updatedProducts,
+                allProducts: updatedAllProducts,
+            };
 
         case ADD_TO_CAR:
             const newItem = state.products.find(product => product.id === action.payload);

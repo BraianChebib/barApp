@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import StarRatings from 'react-star-ratings';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCar } from '../../../redux/actions';
 import { IoCartSharp } from "react-icons/io5";
+import { PiPencilBold } from "react-icons/pi";
 import PanelCard from '../PanelCard';
+import { Link, useNavigate } from "react-router-dom";
 
 const Card = (props) => {
     const [panelOpen, setPanelOpen] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector(state => state.user);
 
     const handleAddToCart = (e) => {
         e.stopPropagation();
@@ -19,15 +23,20 @@ const Card = (props) => {
     const handleCardClick = () => {
         setPanelOpen(true);
     };
- 
+
     const handlePanelClose = () => {
         setPanelOpen(false);
     };
 
+    const handleEditClick = (productId) => {
+        navigate(`/updateProduct/${productId}`);
+    }
+
     return (
-        <div className="mt-10 rounded bg-neutral-900 w-11/12 h-40 hover:bg-grey-700  hover:bg-opacity-50  "  >
+        <div className="relative mt-10 rounded bg-neutral-900 w-11/12 h-40 hover:bg-grey-700  hover:bg-opacity-50  "  >
+            {user.role === "admin" ? <button className='flex justify-center items-center bg-blue-900 absolute rounded-full w-8 h-8 text-xl right-0 text-white' onClick={() => handleEditClick(props.id)}><PiPencilBold /></button> : null}
             <div className='flex pl-4 w-full space-x-26 items-start justify-center' onClick={handleCardClick}>
-                <div className='w-40 text-neutral-400 pt-2'> 
+                <div className='w-40 text-neutral-400 pt-2'>
                     <h2 className="text-left text-white text-xl overflow-hidden overflow-ellipsis whitespace-nowrap">{props.name}</h2>
                     <div className="flex items-center mb-2 w-40 z-0">
                         <StarRatings
