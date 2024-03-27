@@ -4,7 +4,8 @@ const {
     AdminHandler,
     getAllUsers,
     udDateProduct,
-    deleteUser
+    deleteUser, 
+    handlerDeleteProduct,
 } = require("../handlers/adminHandlers");
 
 const adminRouter = Router();
@@ -15,7 +16,8 @@ const adminRouter = Router();
 adminRouter.post("/product/:UserId", AdminHandler);
 adminRouter.get("/getAllUsers", getAllUsers);
 adminRouter.delete("/deleteUser/:id", deleteUser);
-adminRouter.put("/upDateProduct/:id", udDateProduct);
+adminRouter.put("/updateProduct/:id", udDateProduct);
+adminRouter.delete("/deleteProduct/:id", handlerDeleteProduct);
 
 
 module.exports = adminRouter;

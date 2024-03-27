@@ -5,7 +5,10 @@ import NavBar from './components/inc/NavBar/NavBar';
 import Landing from './components/views/Landing/Landing';
 import FormProduct from './components/views/FormProduct';
 import LoginPanel from './components/inc/LoginPanel';
-import RegisterPanel from './components/inc/RegisterPanel'
+import RegisterPanel from './components/inc/RegisterPanel';
+import UpdateProduct from './components/views/updateProduct';
+import ProfileUser from './components/views/ProfileUser';
+
 
 function App() {
 
@@ -19,6 +22,8 @@ function App() {
                 <Route path="/createProduct" element={<FormProduct/>}></Route>
                 <Route path="/loginPanel" element={<LoginPanel/>}></Route>
                 <Route path="/registerPanel" element={<RegisterPanel/>}></Route>
+                <Route path='/profileUser' element={<ProfileUser/>}></Route>
+                <Route path='/updateProduct/:id' element={<UpdateProduct/>}></Route>
             </Routes>
 
         </div>

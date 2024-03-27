@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { useDispatch } from 'react-redux';
-import { register } from '../../redux/actions';
+import { register, login } from '../../redux/actions';
 import firebaseConfig from '../../fb'
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { TiPencil } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPanel = () => {
     const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const RegisterPanel = () => {
 
     const [image, setImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
@@ -25,7 +26,7 @@ const RegisterPanel = () => {
         onSubmit: async (values) => {
             try {
                 const auth = getAuth(firebaseConfig);
-                const userCredential = await createUserWithEmailAndPassword(
+                const {user} = await createUserWithEmailAndPassword(
                     auth,
                     values.email,
                     values.password
@@ -36,9 +37,12 @@ const RegisterPanel = () => {
                     email: values.email,
                     name: values.name,
                     lastname: values.lastname,
-                    id: userCredential.user.uid,
+                    id: user.uid,
                 };
+                const id = user.uid
                 dispatch(register(userData));
+                dispatch(login(id))
+                navigate('/')
 
                 formik.resetForm();
             } catch (error) {
